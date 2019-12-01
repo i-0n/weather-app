@@ -8,16 +8,16 @@ const forecast = (latitude, longitude, callback) => {
                 longitude +
                 "?units=si&lang=uk";
     
-    request({url: url, json: true}, (error, response) => {
+    request({url, json: true}, (error, {body}) => {
         if(error){
             callback('Unable to connect to weather services!', undefined);
-        }else if(response.body.error){
+        }else if(body.error){
             callback('Unable to find forecast for that location. Try another location.', undefined);
         }else{
             callback(undefined, {
-                temperature: response.body.currently.temperature,
-                humidity: response.body.currently.humidity,
-                summary: response.body.currently.summary
+                temperature: body.currently.temperature,
+                humidity: body.currently.humidity,
+                summary: body.currently.summary
             });
         }
     });
